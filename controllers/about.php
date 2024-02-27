@@ -23,8 +23,6 @@ try {
             $comment = $commentsData->getCommentById($commentsData->getCommentsByArticleId($id), $_POST['comment_id']);
             if ($comment !== null && $login_user['email'] == $comment['user_name']) {
                 $commentsData->editComment($_POST['comment_id'], $_POST['text_edit']);
-                print_r($_POST);
-                die();
                 header("Location: about?id=" . $id);
                 exit;
             }
