@@ -1,16 +1,8 @@
 <?php require_once VIEWS. '/incs/header.php' ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
-    // Функция, вызываемая после успешной проверки reCAPTCHA
-    function onRecaptchaSuccess() {
-        // Разблокировать поля формы
-        document.getElementById("email").removeAttribute("disabled");
-        document.getElementById("password").removeAttribute("disabled");
-        document.getElementById("password2").removeAttribute("disabled");
-        document.getElementById("submitBtn").removeAttribute("disabled");
-    }
-</script>
+<script src="assets/captca.js"></script>
+
 <main class="main">
     <div class="container">
         <form method="post" action="/registration">
