@@ -38,6 +38,10 @@ class Comments
     {
         $tree = [];
 
+        if ($nestingLevel >= 10) {
+            return $tree;
+        }
+
         foreach ($comments as $comment) {
             if ($comment['parent_id'] == $parent_id) {
                 $comment['replies'] = $this->buildCommentsTree($comments, $comment['id'], $nestingLevel + 1);
