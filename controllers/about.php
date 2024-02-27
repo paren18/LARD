@@ -44,7 +44,7 @@ try {
         }
     }
 } catch (PDOException $e) {
-    $error_message = 'Авторезируйтесь';
+    $error_message = 'Авторизируйтесь';
 }
 
 if (!$post) {
