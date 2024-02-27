@@ -25,12 +25,12 @@
                 </div>
             </div>
             <div class="d-flex">
-<!--                --><?php //if (!empty($_SESSION['user'])): ?>
-                <a class="nav-link px-2" style="color: white" href="registration">Регестрация</a>
+                <?php if (!empty($_SESSION['user'])): ?>
+                    <a class="nav-link px-2 " style="color: white" href="lk">Личный кабинет</a>
+                <?php else: ?>
+                <a class="nav-link px-2" style="color: white" href="registration">Регистрация</a>
                 <a class="nav-link px-2" style="color: white" href="login">Авторизация</a>
-<!--                --><?php //else: ?>
-<!--                <a class="nav-link px-2 " style="color: white" href="login">Личный кабинет</a>-->
             </div>
-<!--            --><?php //endif; ?>
+         <?php endif; ?>
         </nav>
     </header>

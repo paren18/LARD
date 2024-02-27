@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once CLASSES .'/User.php';
 global $db;
 $title = 'Регистрция';

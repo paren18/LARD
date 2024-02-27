@@ -21,6 +21,16 @@ class User
         }
     }
 
+    public function logout()
+    {
+        session_start();
+        unset($_SESSION['user']);
+        session_destroy();
+        header('Location: /');
+        exit;
+    }
+
+
     public function register($email, $password, $password2)
     {
         if ($password == $password2) {
