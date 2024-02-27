@@ -8,7 +8,7 @@ function displayComments($comments, $id, $post)
     foreach ($comments as $comment) {
         if (isset($comment['id_article']) && $post['id'] == $comment['id_article']) {
             echo <<<HTML
-            <form method="post" action="/about?id=<?= $id ?>">
+            <form method="post" action="/about?id={$post['id']}">
                 <div class="mt-2">
                     <div class="w-100">
                         <div class="d-flex justify-content-between align-items-center">
