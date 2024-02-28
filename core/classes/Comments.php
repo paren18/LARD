@@ -22,7 +22,11 @@ class Comments
 
     public function deleteComment($commentId)
     {
+        $parentComment = $this->db->query("SELECT parent_id FROM comments WHERE id = ?", [$commentId])->fetch();
+        $parentCommentId = $parentComment['parent_id'];
         $this->db->query("DELETE FROM comments WHERE id = ?", [$commentId]);
+
+        $this->db->query("UPDATE comments SET parent_id = ? WHERE parent_id = ?", [$parentCommentId, $commentId]);
     }
 
     public function getCommentsByArticleId($articleId)
@@ -33,7 +37,6 @@ class Comments
         $commentsTree = $this->buildCommentsTree($result);
         return $commentsTree;
     }
-
 
     private function buildCommentsTree($comments, $parent_id = 1, $nestingLevel = 0)
     {

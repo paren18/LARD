@@ -34,11 +34,10 @@ try {
         }
 
     }
+} catch
+(PDOException $e) {
+    $error_message = 'Авторизуйтесь';
 }
-catch
-    (PDOException $e) {
-        $error_message = 'Авторизуйтесь';
-    }
 
 if (!$post) {
     abort();
