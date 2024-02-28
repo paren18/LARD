@@ -17,6 +17,7 @@ function displayCommentForm($comment)
                     <textarea name="text_edit" class="text-justify comment-text mb-3 mx-2" style="width: 98%;resize: none;">{$comment['text']}</textarea>
                 </div>
                 <input type="hidden" name="comment_id" value="{$comment['id']}">
+                <input type="hidden" name="user_name" value="{$comment['user_name']}">
                 <button type="submit" name="edit" class="btn btn-primary mx-2 mb-4">Редактировать</button>
                 <button type="submit" name="delete" class="btn btn-primary mx-2 mb-4">Удалить</button>
                 <button type="button" class="btn btn-primary mx-2 mb-4 reply-btn" data-comment-id="{$comment['id']}">Ответить</button>
@@ -48,7 +49,6 @@ function displayComments($comments, $id, $post)
 }
 
 ?>
-
     <main class="main">
         <div class="container">
             <div class="col-md-12 mt-2">
@@ -99,6 +99,7 @@ function displayComments($comments, $id, $post)
                                                       style="width: 98%;resize: none;"><?= $comment['text'] ?></textarea>
                                         </div>
                                         <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                                        <input type="hidden" name="user_name" value="<?= $comment['user_name'] ?>">
                                         <button type="submit" name="edit" class="btn btn-primary mx-2 mb-4">
                                             Редактировать
                                         </button>
