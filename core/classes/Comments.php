@@ -1,4 +1,5 @@
 <?php
+
 class Comments
 {
     private $db;
@@ -10,7 +11,7 @@ class Comments
 
     public function addComment($articleId, $userEmail, $text, $parent_id = 1)
     {
-            $this->db->query("INSERT INTO comments (`id_article`, `user_name`, `text`, `parent_id`) VALUES (?, ?, ?, ?)", [$articleId, $userEmail, $text, $parent_id]);
+        $this->db->query("INSERT INTO comments (`id_article`, `user_name`, `text`, `parent_id`) VALUES (?, ?, ?, ?)", [$articleId, $userEmail, $text, $parent_id]);
 
     }
 
@@ -26,10 +27,10 @@ class Comments
 
     public function getCommentsByArticleId($articleId)
     {
+
         $result = $this->db->query("SELECT * FROM comments WHERE id_article = ?", [$articleId])->fetchAll();
 
         $commentsTree = $this->buildCommentsTree($result);
-
         return $commentsTree;
     }
 
@@ -53,22 +54,5 @@ class Comments
         return $tree;
     }
 
-
-    public function findCommentId($comments, $commentId)
-    {
-        foreach ($comments as $index => $comment) {
-            if ($comment['id'] == $commentId) {
-                return $index;
-            }
-        }
-
-        return false;
-    }
-
-    public function getCommentById($comments, $commentId)
-    {
-        $index = $this->findCommentId($comments, $commentId);
-        return ($index !== false) ? $comments[$index] : null;
-    }
 
 }

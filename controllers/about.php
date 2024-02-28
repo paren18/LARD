@@ -17,30 +17,27 @@ try {
             header("Location: about?id=" . $id);
             exit;
         } elseif (isset($_POST['edit']) && $login_user['email']) {
-            $comment = $commentsData->getCommentById($commentsData->getCommentsByArticleId($id), $_POST['comment_id']);
-            if ($comment !== null && $login_user['email'] == $comment['user_name']) {
-                $commentsData->editComment($_POST['comment_id'], $_POST['text_edit']);
-                header("Location: about?id=" . $id);
-                exit;
-            }
+            $commentsData->editComment($_POST['comment_id'], $_POST['text_edit']);
+            header("Location: about?id=" . $id);
+            exit;
         } elseif (isset($_POST['delete']) && $login_user['email']) {
-            $comment = $commentsData->getCommentById($commentsData->getCommentsByArticleId($id), $_POST['comment_id']);
-            if ($comment !== null && $login_user['email'] == $comment['user_name']) {
-                $commentsData->deleteComment($_POST['comment_id']);
-                header("Location: about?id=" . $id);
-                exit;
-            }
-        } elseif (isset($_POST['reply']) && $login_user['email'])  {
+            $commentsData->deleteComment($_POST['comment_id']);
+            header("Location: about?id=" . $id);
+            exit;
+        } elseif (isset($_POST['reply']) && $login_user['email']) {
             $commentsData->addComment($id, $login_user['email'], $_POST['text'], $_POST['parent_id']);
             header("Location: about?id=" . $id);
             exit;
         } else {
             $error_message = 'Ошибка';
         }
+
     }
-} catch (PDOException $e) {
-    $error_message = 'Авторизируйтесь';
 }
+catch
+    (PDOException $e) {
+        $error_message = 'Авторизуйтесь';
+    }
 
 if (!$post) {
     abort();

@@ -3,28 +3,40 @@ global $post, $comments, $id;
 require_once VIEWS . '/incs/header.php';
 
 
+function displayCommentForm($comment)
+{
+    return <<<HTML
+        <form method="post" action="/about?id={$comment['id_article']}" id="comment-form-{$comment['id']}">
+            <div class="mt-2">
+                <div class="w-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-row align-items-center mx-2">
+                            <span class="mr-2" name="user_name">{$comment['user_name']}</span>
+                        </div>
+                    </div>
+                    <textarea name="text_edit" class="text-justify comment-text mb-3 mx-2" style="width: 98%;resize: none;">{$comment['text']}</textarea>
+                </div>
+                <input type="hidden" name="comment_id" value="{$comment['id']}">
+                <button type="submit" name="edit" class="btn btn-primary mx-2 mb-4">Редактировать</button>
+                <button type="submit" name="delete" class="btn btn-primary mx-2 mb-4">Удалить</button>
+                <button type="button" class="btn btn-primary mx-2 mb-4 reply-btn" data-comment-id="{$comment['id']}">Ответить</button>
+            </div>
+        </form>
+        <div class="reply-form" id="reply-form-{$comment['id']}" style="display: none;">
+            <form method="post" action="/about?id={$comment['id_article']}">
+                <textarea name="text" class="text-justify comment-text mb-3 mx-2" style="width: 98%;resize: none;"></textarea>
+                <input type="hidden" name="parent_id" value="{$comment['id']}">
+                <button type="submit" name="reply" class="btn btn-primary mx-2 mb-4">Ответить</button>
+            </form>
+        </div>
+    HTML;
+}
+
 function displayComments($comments, $id, $post)
 {
     foreach ($comments as $comment) {
         if (isset($comment['id_article']) && $post['id'] == $comment['id_article']) {
-            echo <<<HTML
-            <form method="post" action="/about?id={$post['id']}">
-                <div class="mt-2">
-                    <div class="w-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-row align-items-center mx-2">
-                                <span class="mr-2" name="user_name">{$comment['user_name']}</span>
-                            </div>
-                        </div>
-                        <textarea name="text_edit" class="text-justify comment-text mb-3 mx-2" style="width: 98%; resize: none;">{$comment['text']}</textarea>
-                    </div>
-                    <input type="hidden" name="comment_id" value="{$comment['id']}">
-                    <button type="submit" name="edit" class="btn btn-primary mx-2 mb-2">Редактировать</button>
-                    <button type="submit" name="delete" class="btn btn-primary mx-2 mb-2">Удалить</button>
-                    <button type="button" class="btn btn-primary mx-2 mb-2 reply-btn" data-comment-id="{$comment['id']}">Ответить</button>
-                </div>
-            </form>
-HTML;
+            echo displayCommentForm($comment);
 
             if (!empty($comment['replies'])) {
                 echo '<ul class="nested">';
@@ -34,6 +46,7 @@ HTML;
         }
     }
 }
+
 ?>
 
     <main class="main">
@@ -72,20 +85,28 @@ HTML;
                             </form>
 
                             <?php foreach ($comments as $comment): ?>
-                                <form method="post" action="/about?id=<?= $id ?>" id="comment-form-<?= $comment['id'] ?>">
+                                <form method="post" action="/about?id=<?= $id ?>"
+                                      id="comment-form-<?= $comment['id'] ?>">
                                     <div class="mt-2">
                                         <div class="w-100">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="d-flex flex-row align-items-center mx-2">
-                                                    <span class="mr-2" name="user_name"><?= $comment['user_name'] ?></span>
+                                                    <span class="mr-2"
+                                                          name="user_name"><?= $comment['user_name'] ?></span>
                                                 </div>
                                             </div>
-                                            <textarea name="text_edit" class="text-justify comment-text mb-3 mx-2" style="width: 98%;resize: none;"><?= $comment['text'] ?></textarea>
+                                            <textarea name="text_edit" class="text-justify comment-text mb-3 mx-2"
+                                                      style="width: 98%;resize: none;"><?= $comment['text'] ?></textarea>
                                         </div>
                                         <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
-                                        <button type="submit" name="edit" class="btn btn-primary mx-2 mb-4">Редактировать</button>
-                                        <button type="submit" name="delete" class="btn btn-primary mx-2 mb-4">Удалить</button>
-                                        <button type="button" class="btn btn-primary mx-2 mb-4 reply-btn" data-comment-id="<?= $comment['id'] ?>">Ответить</button>
+                                        <button type="submit" name="edit" class="btn btn-primary mx-2 mb-4">
+                                            Редактировать
+                                        </button>
+                                        <button type="submit" name="delete" class="btn btn-primary mx-2 mb-4">Удалить
+                                        </button>
+                                        <button type="button" class="btn btn-primary mx-2 mb-4 reply-btn"
+                                                data-comment-id="<?= $comment['id'] ?>">Ответить
+                                        </button>
                                     </div>
                                 </form>
                                 <div class="reply-form" id="reply-form-<?= $comment['id'] ?>"
